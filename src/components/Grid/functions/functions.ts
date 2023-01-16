@@ -6,13 +6,14 @@ interface IMyHeaderCellDetail extends stach.protobuf.stach.v2.RowOrganizedPackag
   isOrderedAsc: boolean;
 }
 
-export const createTable = (table: ITable | undefined, isOrderedAsc: boolean) => {
-  let myTable = null
-
+export const createTable = (table: ITable | undefined |null, isOrderedAsc: boolean) => {
+  let myTable: ITable | null
+  myTable = null
+  
   if (table) {
     myTable = structuredClone(table)
     // Initialize isOrderedAsc properties for leaf headers
-    myTable.data?.rows?.forEach((row: IRow) => {
+    myTable?.data?.rows?.forEach((row: IRow) => {
       if (row.headerCellDetails) {
         Object.values(row.headerCellDetails).forEach((headerCellDetailValue, colIndex) => {
           if (isHeaderLeaf(row, colIndex)) {
@@ -43,11 +44,11 @@ export const isHeaderLeaf = (row: IRow, colIndex: number) => {
 }
 
 export const isHidden = (table: ITable, row: IRow, colIndex: number) => {
-  const myColumns = columns(table)
-
+  // If header cell index is present, we check if it is hidden or not.
+  const myColumns = structuredClone(columns(table))
   if ((row.rowType as unknown as string) === 'Header') {
     const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
-    if (headerCellColumnIndex != null) {
+    if (headerCellColumnIndex != null && myColumns?.[headerCellColumnIndex].isHidden) {
       return myColumns?.[headerCellColumnIndex].isHidden
     }
   } else {
@@ -59,10 +60,9 @@ export const alignment = (table: ITable, row: IRow, colIndex: number, direction:
   const alignmentType = direction === 'horizontal' ? 'halign' : 'valign'
 
   const myColumns = columns(table)
-
   if ((row.rowType as unknown as string) === 'Header') {
     const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
-    if (headerCellColumnIndex != null) {
+    if (headerCellColumnIndex) {
       return myColumns?.[headerCellColumnIndex]?.format?.[alignmentType]
     }
   } else {
@@ -79,8 +79,13 @@ export const colspan = (row: IRow, colIndex: number) => {
 }
 
 const groupLevel = (row: IRow, colIndex: number) => {
-  return row.cellDetails?.[colIndex]?.groupLevel
-}
+  //I want more padding so i changed required parameters.
+  const finalNumber:number | undefined | null = row?.cellDetails?.[colIndex]?.groupLevel
+  if (typeof(finalNumber) == 'number') {
+    return finalNumber * 2;
+  }
+  else return finalNumber
+ }
 
 export const leftPadding = (row: IRow, colIndex: number) => {
   return groupLevel(row, colIndex) + 'em'
