@@ -8,8 +8,6 @@ on:
 
 jobs:
   build:
-    name: Install
-    run: npm install
     name: Build
     runs-on: ubuntu-latest
     steps:
