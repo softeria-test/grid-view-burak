@@ -10,7 +10,7 @@ jobs:
   build:
     name: Install
     run: npm install
-    name: Test
+    name: Run
     run: npm run serve
     name: Build
     runs-on: ubuntu-latest
