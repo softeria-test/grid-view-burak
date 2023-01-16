@@ -8,13 +8,13 @@ on:
 
 jobs:
   build:
-    - name: Install
-      run: npm install
-    - name: Test
-      run: npm run serve
-    - name: Build
+    name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Install
+        run: npm install
+      - name: Test
+        run: npm run serve
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
