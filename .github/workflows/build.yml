@@ -8,7 +8,11 @@ on:
 
 jobs:
   build:
-    name: Build
+    - name: Install
+      run: npm install
+    - name: Test
+      run: npm run serve
+    - name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
