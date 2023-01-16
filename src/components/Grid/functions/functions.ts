@@ -38,8 +38,8 @@ export const isHeader = (row: IRow) => {
 export const isHeaderLeaf = (row: IRow, colIndex: number) => {
   // If rowspan and colspan is not defined or has a value less than 1 for this column of this row,
   // this header should be a leaf
-  const myColspan = colspan(row, colIndex)
-  const myRowspan = rowspan(row, colIndex)
+  const myColspan: number | undefined | null = colspan(row, colIndex)
+  const myRowspan: number | undefined | null = rowspan(row, colIndex)
   return (!myColspan || myColspan < 1) && (!myRowspan || myRowspan < 1)
 }
 
@@ -57,11 +57,11 @@ export const isHidden = (table: ITable, row: IRow, colIndex: number) => {
 }
 
 export const alignment = (table: ITable, row: IRow, colIndex: number, direction: string) => {
-  const alignmentType = direction === 'horizontal' ? 'halign' : 'valign'
+  const alignmentType:string = direction === 'horizontal' ? 'halign' : 'valign'
 
-  const myColumns = columns(table)
+  const myColumns= structuredClone(columns(table))
   if ((row.rowType as unknown as string) === 'Header') {
-    const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
+    const headerCellColumnIndex: number | null | undefined = row.headerCellDetails?.[colIndex]?.columnIndex
     if (headerCellColumnIndex) {
       return myColumns?.[headerCellColumnIndex]?.format?.[alignmentType]
     }
