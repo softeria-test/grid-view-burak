@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_HOST_URL: http://127.0.0.1:9000
+          SONAR_HOST_URL: https://2d13-212-154-70-163.eu.ngrok.io/
           SONAR_SCANNER_OPTS: -Dsonar.projectKey=grid-view-burak
           SONAR_LOGIN: sqp_972ac59e7730927da8752406d849b880af2504d8
       # If you wish to fail your job when the Quality Gate is red, uncomment the
