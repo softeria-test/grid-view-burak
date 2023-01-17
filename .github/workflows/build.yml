@@ -16,10 +16,11 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: http://sonarqube:9000
           SONAR_SCANNER_OPTS: -Dsonar.projectKey=override-this-value-in-docker-compose.override.yml
           SONAR_LOGIN: override-this-value-in-docker-compose.override.yml
+          SONAR_SCANNER_OPTS: -Dsonar.projectKey=grid-view-burak
+          SONAR_LOGIN: sqp_972ac59e7730927da8752406d849b880af2504d8
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
