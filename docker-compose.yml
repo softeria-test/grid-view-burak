@@ -8,7 +8,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - repo:/home/node/vue-grid-component
+      - repo:/home/node/grid-view-burak
   app:
     build: .
     init: true
@@ -16,7 +16,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - repo:/home/node/vue-grid-component
+      - repo:/home/node/grid-view-burak
   cypress:
     image: cypress/included:9.7.0
     init: true
@@ -33,6 +33,8 @@ services:
   sonar_scanner:
     image: sonarsource/sonar-scanner-cli
     init: true
+    tty: true
+    stdin_open: true
     depends_on:
       - sonarqube
     environment:
@@ -41,5 +43,6 @@ services:
       - SONAR_LOGIN=override-this-value-in-docker-compose.override.yml
     volumes:
       - repo:/usr/src
+
 volumes:
   repo:
