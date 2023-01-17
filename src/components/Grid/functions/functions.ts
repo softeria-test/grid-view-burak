@@ -44,7 +44,7 @@ export const isHeaderLeaf = (row: IRow, colIndex: number) => {
 }
 
 export const isHidden = (table: ITable, row: IRow, colIndex: number) => {
-  // If header cell index is present, we check if it is hidden or not.
+  // If header celdl index is present, we check if it is hidden or not.
   const myColumns = structuredClone(columns(table))
   if ((row.rowType as unknown as string) === 'Header') {
     const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
