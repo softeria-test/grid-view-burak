@@ -12,7 +12,7 @@ export const createTable = (table: ITable | undefined |null, isOrderedAsc: boole
   
   if (table) {
     myTable = structuredClone(table)
-    // Initializses isOrderedAsc properties for leaf headers
+    // Initializses iwssOrderedAsc properties for leaf headers
     myTable?.data?.rows?.forEach((row: IRow) => {
       if (row.headerCellDetails) {
         Object.values(row.headerCellDetails).forEach((headerCellDetailValue, colIndex) => {
