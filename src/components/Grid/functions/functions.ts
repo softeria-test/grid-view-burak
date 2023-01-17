@@ -38,8 +38,9 @@ export const isHeader = (row: IRow) => {
 export const isHeaderLeaf = (row: IRow, colIndex: number) => {
   // If rowspan and colspan is not defined or has a value less than 1 for this column of this row,
   // this header should be a leaf
-  const myColspan: number | undefined | null = colspan(row, colIndex)
-  const myRowspan: number | undefined | null = rowspan(row, colIndex)
+  type headerType = number | undefined |null
+  const myColspan: headerType = colspan(row, colIndex)
+  const myRowspan: headerType = rowspan(row, colIndex)
   return (!myColspan || myColspan < 1) && (!myRowspan || myRowspan < 1)
 }
 
