@@ -38,4 +38,3 @@ id_rsa
 docker-compose.override.yml
 
 # Coverage directory used by tools like istanbul
-coverage
