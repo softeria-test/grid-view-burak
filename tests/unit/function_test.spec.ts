@@ -4,10 +4,8 @@ import {
   isHeaderLeaf,
   isHidden,
   alignment,
-  sortDirectionClass,
-  sorted
+  sortDirectionClass
 } from '@/components/Grid/functions/functions'
-import { shallowMount } from '@vue/test-utils'
 import stachRowOrganizedPackage from './fixtures/stach-row-organized-package.json'
 
 describe('GridComp.vue', () => {

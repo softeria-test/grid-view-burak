@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import stachRowOrganizedPackage from './fixtures/stach-row-organized-package.json'
 describe ('comp_test', () => {
     let table: any
-    const wrapper = shallowMount(GridComponentVue as any)
     beforeEach(() => {
         table = stachRowOrganizedPackage.tables.main
     })
