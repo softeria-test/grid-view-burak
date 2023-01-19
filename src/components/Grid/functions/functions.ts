@@ -99,10 +99,13 @@ export const sortDirectionClass = (row: IRow, colIndex: number) => {
 export const sorted = (rows: IRow[], colIndex: number, isOrderedAsc: boolean) => {
   // Increase colIndex by 1 since the first column is allocated for the tree structure
   // But increase it by 2 if it is equal to or bigger than 2 since a hidden column is exist there
-  if (colIndex < 2) {
-    colIndex += 1
-  } else {
-    colIndex += 2
+  const truthVal:boolean = colIndex < 2;
+  switch(truthVal) {
+    case true:
+      colIndex += 1
+      break;
+    case false:
+      colIndex += 2  
   }
 
   const myRows = rows
