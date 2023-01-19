@@ -112,36 +112,40 @@ export const sorted = (rows: IRow[], colIndex: number, isOrderedAsc: boolean) =>
 
   myRows.sort((firstRow: IRow, secondRow: IRow) => {
     let returnValue = null
-
-    if (isHeader(firstRow) || isHeader(secondRow)) {
-      // Don't sort headers
-      returnValue = 0
-    } else {
-      const firstRowCellValue = (firstRow.cells as unknown as [])[colIndex]
-      const secondRowCellValue = (secondRow.cells as unknown as [])[colIndex]
-      if (firstRowCellValue === null && secondRowCellValue === null) {
-        // Don't sort null values
+    let firstRowCellValue = null;
+    let secondRowCellValue = null;
+    const headerTruthVal: boolean = isHeader(firstRow) || isHeader(secondRow)
+    switch(headerTruthVal) {
+      case true:
         returnValue = 0
-      } else if (firstRowCellValue === null) {
-        // null values should be below
-        returnValue = 1
-      } else if (secondRowCellValue === null) {
-        // null values should be below
-        returnValue = -1
-      } else {
-        if (firstRowCellValue > secondRowCellValue) {
+        break;
+      case false:
+        firstRowCellValue = (firstRow.cells as unknown as [])[colIndex]
+        secondRowCellValue = (secondRow.cells as unknown as [])[colIndex]
+        if (firstRowCellValue === null && secondRowCellValue === null) {
+          // Don't sort null values
+          returnValue = 0
+        } else if (firstRowCellValue === null) {
+          // null values should be below
           returnValue = 1
-        } else if (firstRowCellValue < secondRowCellValue) {
+        } else if (secondRowCellValue === null) {
+          // null values should be below
           returnValue = -1
         } else {
-          returnValue = 0
-        }
+          if (firstRowCellValue > secondRowCellValue) {
+            returnValue = 1
+          } else if (firstRowCellValue < secondRowCellValue) {
+            returnValue = -1
+          } else {
+            returnValue = 0
+          }
 
-        // Get negative of returnValue if sortDirection is dsc
-        if (!isOrderedAsc) {
-          returnValue = -returnValue
+          // Get negative of returnValue if sortDirection is dsc
+          if (!isOrderedAsc) {
+            returnValue = -returnValue
+          }
         }
-      }
+        break;
     }
 
     return returnValue
