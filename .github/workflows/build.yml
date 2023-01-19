@@ -19,7 +19,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_SCANNER_OPTS: -Dsonar.projectKey=grid-view-burak
           SONAR_LOGIN: ${{ secrets.SONAR_TOKEN }}
-          sonar.coverage.exclusions: tests/unit/*
+          SONAR_COVERAGE_EXCLUSIONS: ../tests/unit/*
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
