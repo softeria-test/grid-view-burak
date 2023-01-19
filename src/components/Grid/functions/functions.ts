@@ -11,7 +11,7 @@ export const createTable = (table: ITable | undefined, isOrderedAsc: boolean) =>
 
   if (table) {
     myTable = table
-    // Initialize isOrderedAsc properties for leaf headers.....
+    // Initialize isOrderedAsc properties for leaf headers......
     myTable.data?.rows?.forEach((row: IRow) => {
       if (row.headerCellDetails) {
         Object.values(row.headerCellDetails).forEach((headerCellDetailValue, colIndex) => {
