@@ -6,14 +6,13 @@ interface IMyHeaderCellDetail extends stach.protobuf.stach.v2.RowOrganizedPackag
   isOrderedAsc: boolean;
 }
 
-export const createTable = (table: ITable | undefined |null, isOrderedAsc: boolean) => {
-  let myTable: ITable | null
-  myTable = null
-  
+export const createTable = (table: ITable | undefined, isOrderedAsc: boolean) => {
+  let myTable = null
+
   if (table) {
-    myTable = structuredClone(table)
-    // Initializses iwssOrderedAsc properties for leaf headers
-    myTable?.data?.rows?.forEach((row: IRow) => {
+    myTable = table
+    // Initialize isOrderedAsc properties for leaf headers
+    myTable.data?.rows?.forEach((row: IRow) => {
       if (row.headerCellDetails) {
         Object.values(row.headerCellDetails).forEach((headerCellDetailValue, colIndex) => {
           if (isHeaderLeaf(row, colIndex)) {
@@ -38,18 +37,17 @@ export const isHeader = (row: IRow) => {
 export const isHeaderLeaf = (row: IRow, colIndex: number) => {
   // If rowspan and colspan is not defined or has a value less than 1 for this column of this row,
   // this header should be a leaf
-  type headerType = number | undefined |null
-  const myColspan: headerType = colspan(row, colIndex)
-  const myRowspan: headerType = rowspan(row, colIndex)
+  const myColspan = colspan(row, colIndex)
+  const myRowspan = rowspan(row, colIndex)
   return (!myColspan || myColspan < 1) && (!myRowspan || myRowspan < 1)
 }
 
 export const isHidden = (table: ITable, row: IRow, colIndex: number) => {
-  // If header celdl index is present, we check if it is hidden or not.
-  const myColumns = structuredClone(columns(table))
+  const myColumns = columns(table)
+
   if ((row.rowType as unknown as string) === 'Header') {
     const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
-    if (headerCellColumnIndex != null && myColumns?.[headerCellColumnIndex].isHidden) {
+    if (headerCellColumnIndex != null) {
       return myColumns?.[headerCellColumnIndex].isHidden
     }
   } else {
@@ -58,12 +56,13 @@ export const isHidden = (table: ITable, row: IRow, colIndex: number) => {
 }
 
 export const alignment = (table: ITable, row: IRow, colIndex: number, direction: string) => {
-  const alignmentType:string = direction === 'horizontal' ? 'halign' : 'valign'
+  const alignmentType = direction === 'horizontal' ? 'halign' : 'valign'
 
-  const myColumns= structuredClone(columns(table))
+  const myColumns = columns(table)
+
   if ((row.rowType as unknown as string) === 'Header') {
-    const headerCellColumnIndex: number | null | undefined = row.headerCellDetails?.[colIndex]?.columnIndex
-    if (headerCellColumnIndex) {
+    const headerCellColumnIndex = row.headerCellDetails?.[colIndex]?.columnIndex
+    if (headerCellColumnIndex != null) {
       return myColumns?.[headerCellColumnIndex]?.format?.[alignmentType]
     }
   } else {
@@ -80,13 +79,8 @@ export const colspan = (row: IRow, colIndex: number) => {
 }
 
 const groupLevel = (row: IRow, colIndex: number) => {
-  //I want more padding so i changed required parameters.
-  const finalNumber:number | undefined | null = row?.cellDetails?.[colIndex]?.groupLevel
-  if (typeof(finalNumber) == 'number') {
-    return finalNumber * 2;
-  }
-  else return finalNumber
- }
+  return row.cellDetails?.[colIndex]?.groupLevel
+}
 
 export const leftPadding = (row: IRow, colIndex: number) => {
   return groupLevel(row, colIndex) + 'em'
@@ -103,7 +97,7 @@ export const sortDirectionClass = (row: IRow, colIndex: number) => {
 }
 
 export const sorted = (rows: IRow[], colIndex: number, isOrderedAsc: boolean) => {
-  // Increase colxIndex by 1 since the first column is allocated for the tree structure
+  // Increase colIndex by 1 since the first column is allocated for the tree structure
   // But increase it by 2 if it is equal to or bigger than 2 since a hidden column is exist there
   if (colIndex < 2) {
     colIndex += 1
@@ -111,7 +105,7 @@ export const sorted = (rows: IRow[], colIndex: number, isOrderedAsc: boolean) =>
     colIndex += 2
   }
 
-  const myRows = structuredClone(rows)
+  const myRows = rows
 
   myRows.sort((firstRow: IRow, secondRow: IRow) => {
     let returnValue = null
