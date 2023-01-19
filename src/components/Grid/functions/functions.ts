@@ -126,7 +126,7 @@ export const sorted = (rows: IRow[], colIndex: number, isOrderedAsc: boolean) =>
           // Don't sort null values
           returnValue = 0
         } else if (firstRowCellValue === null) {
-          // null values should be below
+          // null values should be below.
           returnValue = 1
         } else if (secondRowCellValue === null) {
           // null values should be below
