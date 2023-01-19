@@ -9,7 +9,7 @@ COPY --chown=node id_rsa /home/node/.ssh/
 RUN chmod 400 /home/node/.ssh/id_rsa
 RUN \
   eval "$(ssh-agent -s)" \
-  ssh-add ~/id_rsa
+  ssh-add ~/.ssh/id_rsa
 
 # Setup git
 RUN git config --global user.name "Reha Burak Acar"
