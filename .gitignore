@@ -33,7 +33,7 @@ pnpm-debug.log*
 
 # Private SSH keys
 id_rsa
-
+coverage
 # Docker Compose override file
 docker-compose.override.yml
 
